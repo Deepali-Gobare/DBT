@@ -1,0 +1,1295 @@
+Microsoft Windows [Version 10.0.19045.4894]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\IET>mysql --host=192.168.10.150 --port=3306 --user=dac22 --password=welcome
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 44
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> show dbs
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dbs' at line 1
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| dac22              |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> use dac22
+Database changed
+mysql> show tables
+    -> ;
++-----------------+
+| Tables_in_dac22 |
++-----------------+
+| t11_10          |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> create table Student(id int primary key,namefirst varchar(20),namelast varchar(20),DOB Date,emailID varchar(40));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc Student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| namefirst | varchar(20) | YES  |     | NULL    |       |
+| namelast  | varchar(20) | YES  |     | NULL    |       |
+| DOB       | date        | YES  |     | NULL    |       |
+| emailID   | varchar(40) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> create table Student_Phone(id int primary key,studentID int,number int,isActive int forigen key(studentID) references Student(ID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'forigen key(studentID) references Student(ID))' at line 1
+mysql> create table Student_Phone(id int primary key,studentID int,number int,isActive int foreign key(studentID) references Student(ID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(studentID) references Student(ID))' at line 1
+mysql> create table Student_Phone(id int primary key,studentID int,number int,isActive int foreign key(studentID) reference Student(ID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(studentID) reference Student(ID))' at line 1
+mysql> create table Student_Phone(id int primary key,studentID int,number int,isActive int foreign key(studentID) reference Student(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(studentID) reference Student(id))' at line 1
+mysql> create table Student_Phone(id int primary key,studentID int,number int,isActive int,foreign key(studentID) reference Student(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reference Student(id))' at line 1
+mysql> create table Student_Phone(id int primary key,studentID int,number int,isActive int,foreign key(studentID) references Student(id));
+Query OK, 0 rows affected (0.61 sec)
+
+mysql> ^C
+mysql> clear scr;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'clear scr' at line 1
+mysql> create table Student_Address(id int primary key,studentID int unique key not null,address varchar(50),foreign key(studentID) references Student(id));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> create table faculty(id int primary key,namefirst varchar(20),namelast varchar(20),DOB Date,emailID varchar(40));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> create table faculty_phone(id int primary key,facultyID int ,number int ,foregin key(facultyID) references faculty(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(facultyID) references faculty(id)' at line 1
+mysql> create table faculty_phone(id int primary key,facultyID int ,number int ,foreign key(facultyID) references faculty(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table faculty_phone(id int primary key,facultyID int ,number int ,foreign key(facultyID) references faculty(id));
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> create table faculty_Address(id int primary key,facultyID int unique key not null,address varchar(50) ,foreign key(facultyID) references faculty(id));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> create table course(id int primary key,name varchar(30),duration int ,summery varchar(100) );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> create table modules(id int primary key,name varchar(30),duration int);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table course_modules(id int primary key,courseID int,moduleID int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> create table course_batches(id int primary key,name varchar(40),courseID int ,starton DATE,endon DATE,capicity int,foreign key(courseID) references faculty(id));
+Microsoft Windows [Version 10.0.19045.4894]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\IET>mysql --host=192.168.10.150 --port=3306 --user=dac21 --password=welcome;
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1045 (28000): Access denied for user 'dac21'@'192.168.10.123' (using password: YES)
+
+C:\Users\IET>mysql --host=192.168.10.150 --port=3306 --user=dac22 --password=welcome;
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1045 (28000): Access denied for user 'dac22'@'192.168.10.123' (using password: YES)
+
+C:\Users\IET>mysql --host=192.168.10.150 --port=3306 --user=dac22 --password=welcome
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 136
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> ^C
+mysql> ^C
+mysql> ^C
+mysql> show tables
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> use dac22;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_dac22     |
++---------------------+
+| a                   |
+| agent               |
+| andor               |
+| b                   |
+| blanktablea         |
+| blanktableb         |
+| blog                |
+| bonus               |
+| books               |
+| candidate           |
+| client              |
+| coalesce            |
+| comments            |
+| company             |
+| course              |
+| course_modules      |
+| customer            |
+| customers           |
+| demodept1           |
+| demodept2           |
+| dept                |
+| dept1               |
+| docs                |
+| doctor              |
+| doctorvisits        |
+| dummy               |
+| duplicate           |
+| emp                 |
+| emp1                |
+| emp2                |
+| emp_attendance      |
+| emp_cards           |
+| emp_phone           |
+| empj                |
+| envelope            |
+| faculty             |
+| faculty_address     |
+| faculty_phone       |
+| food                |
+| fullname            |
+| hobby               |
+| item                |
+| job_list            |
+| key_parts           |
+| labtestlist         |
+| leadtable           |
+| licence             |
+| location            |
+| mass_table          |
+| medicinelist        |
+| menucard            |
+| modules             |
+| nearest             |
+| new                 |
+| newbooks            |
+| nullif              |
+| numbers             |
+| numberstring        |
+| ord                 |
+| orderdetails        |
+| orders              |
+| overtime            |
+| patient             |
+| phonecall           |
+| pivot_table         |
+| plumber             |
+| plumber_service_map |
+| points              |
+| price               |
+| product             |
+| product_sales       |
+| products            |
+| quarterly_revenue   |
+| r                   |
+| r1                  |
+| r2                  |
+| races               |
+| regexpr             |
+| replacedept         |
+| revenue             |
+| rockets             |
+| runners             |
+| runningserver       |
+| sales               |
+| sales_channel       |
+| salespeople         |
+| salesperson         |
+| salgrade            |
+| server              |
+| service             |
+| seta                |
+| setb                |
+| shop                |
+| softdrink           |
+| sort                |
+| sourcenames         |
+| stadium             |
+| states              |
+| station             |
+| status              |
+| stringnumber        |
+| student             |
+| student_address     |
+| student_phone       |
+| t11_10              |
+| tablea              |
+| tableaa             |
+| tableb              |
+| tablebb             |
+| targetnames         |
+| tasks               |
+| temp1               |
+| traintimetable      |
+| transactions        |
+| vote_response       |
+| votes               |
+| warehouse           |
+| yearly_revenue      |
+| z                   |
++---------------------+
+119 rows in set (0.01 sec)
+
+mysql> desc Course
+    -> ;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id       | int          | NO   | PRI | NULL    |       |
+| name     | varchar(30)  | YES  |     | NULL    |       |
+| duration | int          | YES  |     | NULL    |       |
+| summery  | varchar(100) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc Student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| namefirst | varchar(20) | YES  |     | NULL    |       |
+| namelast  | varchar(20) | YES  |     | NULL    |       |
+| DOB       | date        | YES  |     | NULL    |       |
+| emailID   | varchar(40) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_dac22     |
++---------------------+
+| a                   |
+| agent               |
+| andor               |
+| b                   |
+| blanktablea         |
+| blanktableb         |
+| blog                |
+| bonus               |
+| books               |
+| candidate           |
+| client              |
+| coalesce            |
+| comments            |
+| company             |
+| course              |
+| course_modules      |
+| customer            |
+| customers           |
+| demodept1           |
+| demodept2           |
+| dept                |
+| dept1               |
+| docs                |
+| doctor              |
+| doctorvisits        |
+| dummy               |
+| duplicate           |
+| emp                 |
+| emp1                |
+| emp2                |
+| emp_attendance      |
+| emp_cards           |
+| emp_phone           |
+| empj                |
+| envelope            |
+| faculty             |
+| faculty_address     |
+| faculty_phone       |
+| food                |
+| fullname            |
+| hobby               |
+| item                |
+| job_list            |
+| key_parts           |
+| labtestlist         |
+| leadtable           |
+| licence             |
+| location            |
+| mass_table          |
+| medicinelist        |
+| menucard            |
+| modules             |
+| nearest             |
+| new                 |
+| newbooks            |
+| nullif              |
+| numbers             |
+| numberstring        |
+| ord                 |
+| orderdetails        |
+| orders              |
+| overtime            |
+| patient             |
+| phonecall           |
+| pivot_table         |
+| plumber             |
+| plumber_service_map |
+| points              |
+| price               |
+| product             |
+| product_sales       |
+| products            |
+| quarterly_revenue   |
+| r                   |
+| r1                  |
+| r2                  |
+| races               |
+| regexpr             |
+| replacedept         |
+| revenue             |
+| rockets             |
+| runners             |
+| runningserver       |
+| sales               |
+| sales_channel       |
+| salespeople         |
+| salesperson         |
+| salgrade            |
+| server              |
+| service             |
+| seta                |
+| setb                |
+| shop                |
+| softdrink           |
+| sort                |
+| sourcenames         |
+| stadium             |
+| states              |
+| station             |
+| status              |
+| stringnumber        |
+| student             |
+| student_address     |
+| student_phone       |
+| t11_10              |
+| tablea              |
+| tableaa             |
+| tableb              |
+| tablebb             |
+| targetnames         |
+| tasks               |
+| temp1               |
+| traintimetable      |
+| transactions        |
+| vote_response       |
+| votes               |
+| warehouse           |
+| yearly_revenue      |
+| z                   |
++---------------------+
+119 rows in set (0.04 sec)
+
+mysql> desc Student_phone;
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| id        | int  | NO   | PRI | NULL    |       |
+| studentID | int  | YES  | MUL | NULL    |       |
+| number    | int  | YES  |     | NULL    |       |
+| isActive  | int  | YES  |     | NULL    |       |
++-----------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table Student_phone modify isActive bool;
+Query OK, 0 rows affected (0.96 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Student_phone;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| id        | int        | NO   | PRI | NULL    |       |
+| studentID | int        | YES  | MUL | NULL    |       |
+| number    | int        | YES  |     | NULL    |       |
+| isActive  | tinyint(1) | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_dac22     |
++---------------------+
+| a                   |
+| agent               |
+| andor               |
+| b                   |
+| blanktablea         |
+| blanktableb         |
+| blog                |
+| bonus               |
+| books               |
+| candidate           |
+| client              |
+| coalesce            |
+| comments            |
+| company             |
+| course              |
+| course_modules      |
+| customer            |
+| customers           |
+| demodept1           |
+| demodept2           |
+| dept                |
+| dept1               |
+| docs                |
+| doctor              |
+| doctorvisits        |
+| dummy               |
+| duplicate           |
+| emp                 |
+| emp1                |
+| emp2                |
+| emp_attendance      |
+| emp_cards           |
+| emp_phone           |
+| empj                |
+| envelope            |
+| faculty             |
+| faculty_address     |
+| faculty_phone       |
+| food                |
+| fullname            |
+| hobby               |
+| item                |
+| job_list            |
+| key_parts           |
+| labtestlist         |
+| leadtable           |
+| licence             |
+| location            |
+| mass_table          |
+| medicinelist        |
+| menucard            |
+| modules             |
+| nearest             |
+| new                 |
+| newbooks            |
+| nullif              |
+| numbers             |
+| numberstring        |
+| ord                 |
+| orderdetails        |
+| orders              |
+| overtime            |
+| patient             |
+| phonecall           |
+| pivot_table         |
+| plumber             |
+| plumber_service_map |
+| points              |
+| price               |
+| product             |
+| product_sales       |
+| products            |
+| quarterly_revenue   |
+| r                   |
+| r1                  |
+| r2                  |
+| races               |
+| regexpr             |
+| replacedept         |
+| revenue             |
+| rockets             |
+| runners             |
+| runningserver       |
+| sales               |
+| sales_channel       |
+| salespeople         |
+| salesperson         |
+| salgrade            |
+| server              |
+| service             |
+| seta                |
+| setb                |
+| shop                |
+| softdrink           |
+| sort                |
+| sourcenames         |
+| stadium             |
+| states              |
+| station             |
+| status              |
+| stringnumber        |
+| student             |
+| student_address     |
+| student_phone       |
+| t11_10              |
+| tablea              |
+| tableaa             |
+| tableb              |
+| tablebb             |
+| targetnames         |
+| tasks               |
+| temp1               |
+| traintimetable      |
+| transactions        |
+| vote_response       |
+| votes               |
+| warehouse           |
+| yearly_revenue      |
+| z                   |
++---------------------+
+119 rows in set (0.01 sec)
+
+mysql> desc student_address;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| studentID | int         | NO   | UNI | NULL    |       |
+| address   | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc information_schema.table_constrient;
+ERROR 1109 (42S02): Unknown table 'TABLE_CONSTRIENT' in information_schema
+mysql> desc information_schema.table_constraints;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| CONSTRAINT_CATALOG | varchar(64) | YES  |     | NULL    |       |
+| CONSTRAINT_SCHEMA  | varchar(64) | YES  |     | NULL    |       |
+| CONSTRAINT_NAME    | varchar(64) | YES  |     | NULL    |       |
+| TABLE_SCHEMA       | varchar(64) | YES  |     | NULL    |       |
+| TABLE_NAME         | varchar(64) | YES  |     | NULL    |       |
+| CONSTRAINT_TYPE    | varchar(11) | NO   |     |         |       |
+| ENFORCED           | varchar(3)  | NO   |     |         |       |
++--------------------+-------------+------+-----+---------+-------+
+7 rows in set (0.11 sec)
+
+mysql> select table_name,constraint_type,constratnt_name from information_schema.table_constarint where constraint_schema="dac22";
+ERROR 1109 (42S02): Unknown table 'TABLE_CONSTARINT' in information_schema
+mysql> SELECT table_name, constraint_type, constraint_name
+    -> FROM information_schema.table_constraints
+    -> WHERE constraint_schema = 'dac22';
++-------------------+-----------------+------------------------+
+| TABLE_NAME        | CONSTRAINT_TYPE | CONSTRAINT_NAME        |
++-------------------+-----------------+------------------------+
+| agent             | PRIMARY KEY     | PRIMARY                |
+| blog              | PRIMARY KEY     | PRIMARY                |
+| bonus             | PRIMARY KEY     | PRIMARY                |
+| books             | PRIMARY KEY     | PRIMARY                |
+| candidate         | PRIMARY KEY     | PRIMARY                |
+| coalesce          | PRIMARY KEY     | PRIMARY                |
+| comments          | PRIMARY KEY     | PRIMARY                |
+| comments          | FOREIGN KEY     | comments_ibfk_1        |
+| course            | PRIMARY KEY     | PRIMARY                |
+| course_modules    | PRIMARY KEY     | PRIMARY                |
+| customer          | PRIMARY KEY     | PRIMARY                |
+| customer          | CHECK           | CUSTID_ZERO            |
+| customers         | PRIMARY KEY     | PRIMARY                |
+| customers         | FOREIGN KEY     | FK_SNUM                |
+| dept              | PRIMARY KEY     | PRIMARY                |
+| dept1             | PRIMARY KEY     | PRIMARY                |
+| doctor            | UNIQUE          | id                     |
+| doctor            | PRIMARY KEY     | PRIMARY                |
+| doctorvisits      | FOREIGN KEY     | fk_doctorID            |
+| doctorvisits      | FOREIGN KEY     | fk_patientID           |
+| emp               | PRIMARY KEY     | PRIMARY                |
+| emp               | FOREIGN KEY     | EMP_FOREIGN_KEY_deptno |
+| emp               | FOREIGN KEY     | EMP_FOREIGN_KEY_mgr    |
+| emp               | CHECK           | CHK_PWD                |
+| emp1              | PRIMARY KEY     | PRIMARY                |
+| emp1              | FOREIGN KEY     | EMP1_FOREIGN_KEY1      |
+| emp1              | FOREIGN KEY     | EMP1_SELF_KEY1         |
+| emp2              | PRIMARY KEY     | PRIMARY                |
+| emp2              | FOREIGN KEY     | EMP2_FOREIGN_KEY2      |
+| emp_cards         | PRIMARY KEY     | PRIMARY                |
+| emp_cards         | FOREIGN KEY     | emp_cards_ibfk_1       |
+| emp_phone         | PRIMARY KEY     | PRIMARY                |
+| emp_phone         | FOREIGN KEY     | emp_phone_ibfk_1       |
+| empj              | PRIMARY KEY     | PRIMARY                |
+| faculty           | PRIMARY KEY     | PRIMARY                |
+| faculty_address   | UNIQUE          | facultyID              |
+| faculty_address   | PRIMARY KEY     | PRIMARY                |
+| faculty_address   | FOREIGN KEY     | faculty_address_ibfk_1 |
+| faculty_phone     | PRIMARY KEY     | PRIMARY                |
+| faculty_phone     | FOREIGN KEY     | faculty_phone_ibfk_1   |
+| fullname          | PRIMARY KEY     | PRIMARY                |
+| item              | PRIMARY KEY     | PRIMARY                |
+| item              | FOREIGN KEY     | ITEM_FOREIGN_KEY       |
+| job_list          | PRIMARY KEY     | PRIMARY                |
+| labtestlist       | PRIMARY KEY     | PRIMARY                |
+| leadtable         | PRIMARY KEY     | PRIMARY                |
+| licence           | PRIMARY KEY     | PRIMARY                |
+| location          | PRIMARY KEY     | PRIMARY                |
+| medicinelist      | PRIMARY KEY     | PRIMARY                |
+| modules           | PRIMARY KEY     | PRIMARY                |
+| newbooks          | PRIMARY KEY     | PRIMARY                |
+| numberstring      | PRIMARY KEY     | PRIMARY                |
+| ord               | PRIMARY KEY     | PRIMARY                |
+| ord               | FOREIGN KEY     | ORD_FOREIGN_KEY        |
+| ord               | CHECK           | TOTAL_ZERO             |
+| orderdetails      | PRIMARY KEY     | PRIMARY                |
+| orders            | PRIMARY KEY     | PRIMARY                |
+| orders            | FOREIGN KEY     | FK_CNUM                |
+| orders            | FOREIGN KEY     | FK_ORDERS_SNUM         |
+| overtime          | PRIMARY KEY     | PRIMARY                |
+| patient           | UNIQUE          | id                     |
+| patient           | PRIMARY KEY     | PRIMARY                |
+| phonecall         | PRIMARY KEY     | PRIMARY                |
+| pivot_table       | PRIMARY KEY     | PRIMARY                |
+| product           | PRIMARY KEY     | PRIMARY                |
+| products          | PRIMARY KEY     | PRIMARY                |
+| quarterly_revenue | PRIMARY KEY     | PRIMARY                |
+| replacedept       | PRIMARY KEY     | PRIMARY                |
+| revenue           | PRIMARY KEY     | PRIMARY                |
+| runningserver     | PRIMARY KEY     | PRIMARY                |
+| salespeople       | PRIMARY KEY     | PRIMARY                |
+| server            | PRIMARY KEY     | PRIMARY                |
+| sourcenames       | PRIMARY KEY     | PRIMARY                |
+| stadium           | PRIMARY KEY     | PRIMARY                |
+| status            | PRIMARY KEY     | PRIMARY                |
+| student           | PRIMARY KEY     | PRIMARY                |
+| student_address   | PRIMARY KEY     | PRIMARY                |
+| student_address   | UNIQUE          | studentID              |
+| student_address   | FOREIGN KEY     | student_address_ibfk_1 |
+| student_phone     | PRIMARY KEY     | PRIMARY                |
+| student_phone     | FOREIGN KEY     | student_phone_ibfk_1   |
+| targetnames       | PRIMARY KEY     | PRIMARY                |
+| tasks             | PRIMARY KEY     | PRIMARY                |
+| traintimetable    | PRIMARY KEY     | PRIMARY                |
+| transactions      | PRIMARY KEY     | PRIMARY                |
+| votes             | PRIMARY KEY     | PRIMARY                |
+| yearly_revenue    | PRIMARY KEY     | PRIMARY                |
++-------------------+-----------------+------------------------+
+87 rows in set (0.06 sec)
+
+mysql> SELECT
+    ->     table_name,
+    ->     constraint_name,
+    ->     constraint_type
+    -> FROM
+    ->     information_schema.table_constraints
+    -> WHERE
+    ->     table_schema = 'your_database_name'
+    ->     AND table_name = 'your_table_name';
+Empty set (0.00 sec)
+
+mysql> SELECT
+    ->     table_name,
+    ->     constraint_name,
+    ->     constraint_type
+    -> FROM
+    ->     information_schema.table_constraints
+    -> WHERE
+    ->     table_schema = 'dac22'
+    ->     AND table_name = 'Student_Address';
++-----------------+------------------------+-----------------+
+| TABLE_NAME      | CONSTRAINT_NAME        | CONSTRAINT_TYPE |
++-----------------+------------------------+-----------------+
+| student_address | PRIMARY                | PRIMARY KEY     |
+| student_address | studentID              | UNIQUE          |
+| student_address | student_address_ibfk_1 | FOREIGN KEY     |
++-----------------+------------------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO Student (ID, namefirst, namelast, DOB, emailID) VALUES
+    -> (1, 'saleel', 'bagde', '1984-06-12', 'saleel.bagde@gmail.com'),
+    -> (2, 'omkar', 'rakde', '1969-10-25', 'omkar.rakde@gmail.com'),
+    -> (3, 'ulka', 'joshi', '1970-10-25', 'ulka.joshi@gmail.com'),
+    -> (4, 'rahul', 'patil', '1982-10-31', 'rahul.patil@gmail.com'),
+    -> (5, 'ruhan', 'bagde', '1984-01-12', 'ruhan.bagde@gmail.com'),
+    -> (6, 'lala', 'prasad', '1980-12-01', 'lala.prasad@gmail.com'),
+    -> (7, 'sharmin', 'bagde', '1986-12-14', 'sharmin.bagde@gmail.com'),
+    -> (8, 'vrushali', 'bagde', '1984-12-29', 'vrushali.bagde@gmail.com'),
+    -> (9, 'vasant', 'khande', '1992-10-26', 'vasant.khande@gmail.com'),
+    -> (10, 'nitish', 'patil', '1990-10-26', 'nitish.patil@gmail.com'),
+    -> (11, 'neel', 'save', '1975-10-30', 'neel.save@gmail.com'),
+    -> (12, 'deep', 'save', '1986-11-30', 'deep.save@gmail.com'),
+    -> (13, 'nrupali', 'save', '1981-12-01', 'nrupali.save@gmail.com'),
+    -> (14, 'supriya', 'karnik', '1983-12-15', 'supriya.karnik@gmail.com'),
+    -> (15, 'bandish', 'karnik', '1987-12-30', 'bandish.karnik@gmail.com'),
+    -> (16, 'sangita', 'karnik', '1990-12-01', 'sangita.karnik@gmail.com'),
+    -> (17, 'sangita', 'menon', '1989-10-26', 'sangita.menon@gmail.com'),
+    -> (18, 'rahul', 'shah', '1982-06-12', 'rahul.shah@gmail.com'),
+    -> (19, 'bhavin', 'patel', '1983-11-13', 'bhavin.patel@gmail.com'),
+    -> (20, 'kaushal', 'patil', '1982-07-30', 'kaushal.patil@gmail.com'),
+    -> (21, 'pankaj', 'gandhi', '1982-07-30', 'pankaj.gandhi@gmail.com'),
+    -> (22, 'rajan', 'patel', '1982-07-30', 'rajan.patel@gmail.com'),
+    -> (23, 'bhavin', 'desai', '1982-07-30', 'bhavin.desai@gmail.com'),
+    -> (24, 'mukesh', 'bhavsar', '1982-07-30', 'mukesh.bhavsar@gmail.com'),
+    -> (25, 'dilu', 'khande', '1982-07-30', 'dilu.khande@gmail.com'),
+    -> (26, 'sonam', 'khan', '1972-05-13', 'sonam.khan@gmail.com'),
+    -> (27, 'rohit', 'patil', '1976-12-31', 'rohit.patil@gmail.com'),
+    -> (28, 'raj', 'bubber', '1982-02-28', 'raj.bubber@gmail.com');
+Query OK, 28 rows affected (0.10 sec)
+Records: 28  Duplicates: 0  Warnings: 0
+
+mysql> select * from Student;
++----+-----------+----------+------------+--------------------------+
+| id | namefirst | namelast | DOB        | emailID                  |
++----+-----------+----------+------------+--------------------------+
+|  1 | saleel    | bagde    | 1984-06-12 | saleel.bagde@gmail.com   |
+|  2 | omkar     | rakde    | 1969-10-25 | omkar.rakde@gmail.com    |
+|  3 | ulka      | joshi    | 1970-10-25 | ulka.joshi@gmail.com     |
+|  4 | rahul     | patil    | 1982-10-31 | rahul.patil@gmail.com    |
+|  5 | ruhan     | bagde    | 1984-01-12 | ruhan.bagde@gmail.com    |
+|  6 | lala      | prasad   | 1980-12-01 | lala.prasad@gmail.com    |
+|  7 | sharmin   | bagde    | 1986-12-14 | sharmin.bagde@gmail.com  |
+|  8 | vrushali  | bagde    | 1984-12-29 | vrushali.bagde@gmail.com |
+|  9 | vasant    | khande   | 1992-10-26 | vasant.khande@gmail.com  |
+| 10 | nitish    | patil    | 1990-10-26 | nitish.patil@gmail.com   |
+| 11 | neel      | save     | 1975-10-30 | neel.save@gmail.com      |
+| 12 | deep      | save     | 1986-11-30 | deep.save@gmail.com      |
+| 13 | nrupali   | save     | 1981-12-01 | nrupali.save@gmail.com   |
+| 14 | supriya   | karnik   | 1983-12-15 | supriya.karnik@gmail.com |
+| 15 | bandish   | karnik   | 1987-12-30 | bandish.karnik@gmail.com |
+| 16 | sangita   | karnik   | 1990-12-01 | sangita.karnik@gmail.com |
+| 17 | sangita   | menon    | 1989-10-26 | sangita.menon@gmail.com  |
+| 18 | rahul     | shah     | 1982-06-12 | rahul.shah@gmail.com     |
+| 19 | bhavin    | patel    | 1983-11-13 | bhavin.patel@gmail.com   |
+| 20 | kaushal   | patil    | 1982-07-30 | kaushal.patil@gmail.com  |
+| 21 | pankaj    | gandhi   | 1982-07-30 | pankaj.gandhi@gmail.com  |
+| 22 | rajan     | patel    | 1982-07-30 | rajan.patel@gmail.com    |
+| 23 | bhavin    | desai    | 1982-07-30 | bhavin.desai@gmail.com   |
+| 24 | mukesh    | bhavsar  | 1982-07-30 | mukesh.bhavsar@gmail.com |
+| 25 | dilu      | khande   | 1982-07-30 | dilu.khande@gmail.com    |
+| 26 | sonam     | khan     | 1972-05-13 | sonam.khan@gmail.com     |
+| 27 | rohit     | patil    | 1976-12-31 | rohit.patil@gmail.com    |
+| 28 | raj       | bubber   | 1982-02-28 | raj.bubber@gmail.com     |
++----+-----------+----------+------------+--------------------------+
+28 rows in set (0.00 sec)
+
+mysql> INSERT INTO Student_Phone (ID, studentID, number, isActive) VALUES
+    -> (1, 1, '7032300034', 1),
+    -> (2, 2, '7032300039', 1),
+    -> (3, 3, '7032300050', 1),
+    -> (4, 4, '7032300027', 1),
+    -> (5, 5, '7032300001', 1),
+    -> (6, 6, '7032300079', 1),
+    -> (7, 7, '7032300081', 1),
+    -> (8, 8, '7032300054', 1),
+    -> (9, 9, '7032300059', 1),
+    -> (10, 10, '7032300086', 1),
+    -> (11, 11, '7032300082', 1),
+    -> (12, 12, '7032300042', 1),
+    -> (13, 13, '7032300055', 1),
+    -> (14, 14, '7032300013', 1),
+    -> (15, 15, '7032300099', 1),
+    -> (16, 16, '7032300023', 1),
+    -> (17, 17, '7032300084', 1),
+    -> (18, 18, '7032300011', 1),
+    -> (19, 19, '7032300066', 1),
+    -> (20, 20, '7032300096', 1),
+    -> (21, 1, '7132300034', 1),
+    -> (22, 2, '7132300039', 1),
+    -> (23, 3, '7132300050', 1),
+    -> (24, 4, '7132300027', 1),
+    -> (25, 5, '7032300001', 1),
+    -> (26, 6, '7132300079', 1),
+    -> (27, 7, '7132300081', 0),
+    -> (28, 8, '7132300054', 0),
+    -> (29, 9, '7132300059', 0),
+    -> (30, 10, '7132300086', 0),
+    -> (31, 11, '7132300082', 0),
+    -> (32, 12, '7132300042', 0),
+    -> (33, 13, '7132300055', 0),
+    -> (34, 13, '7132300055', 0),
+    -> (35, 13, '7132300055', 1),
+    -> (36, 6, '7134567123', 0),
+    -> (37, 21, '7156567123', 1),
+    -> (38, 22, '7156567134', 1),
+    -> (39, 23, '7156563423', 0),
+    -> (40, 24, '7156567183', 0),
+    -> (41, 25, '7146566412', 1);
+ERROR 1264 (22003): Out of range value for column 'number' at row 1
+mysql> desc Student_phone;
++-----------+------------+------+-----+---------+-------+
+| Field     | Type       | Null | Key | Default | Extra |
++-----------+------------+------+-----+---------+-------+
+| id        | int        | NO   | PRI | NULL    |       |
+| studentID | int        | YES  | MUL | NULL    |       |
+| number    | int        | YES  |     | NULL    |       |
+| isActive  | tinyint(1) | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table Student_phone modify number VARCHAR(30);
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Student_phone;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Student_Phone (ID, studentID, number, isActive) VALUES
+    -> (1, 1, '7032300034', 1),
+    -> (2, 2, '7032300039', 1),
+    -> (3, 3, '7032300050', 1),
+    -> (4, 4, '7032300027', 1),
+    -> (5, 5, '7032300001', 1),
+    -> (6, 6, '7032300079', 1),
+    -> (7, 7, '7032300081', 1),
+    -> (8, 8, '7032300054', 1),
+    -> (9, 9, '7032300059', 1),
+    -> (10, 10, '7032300086', 1),
+    -> (11, 11, '7032300082', 1),
+    -> (12, 12, '7032300042', 1),
+    -> (13, 13, '7032300055', 1),
+    -> (14, 14, '7032300013', 1),
+    -> (15, 15, '7032300099', 1),
+    -> (16, 16, '7032300023', 1),
+    -> (17, 17, '7032300084', 1),
+    -> (18, 18, '7032300011', 1),
+    -> (19, 19, '7032300066', 1),
+    -> (20, 20, '7032300096', 1),
+    -> (21, 1, '7132300034', 1),
+    -> (22, 2, '7132300039', 1),
+    -> (23, 3, '7132300050', 1),
+    -> (24, 4, '7132300027', 1),
+    -> (25, 5, '7032300001', 1),
+    -> (26, 6, '7132300079', 1),
+    -> (27, 7, '7132300081', 0),
+    -> (28, 8, '7132300054', 0),
+    -> (29, 9, '7132300059', 0),
+    -> (30, 10, '7132300086', 0),
+    -> (31, 11, '7132300082', 0),
+    -> (32, 12, '7132300042', 0),
+    -> (33, 13, '7132300055', 0),
+    -> (34, 13, '7132300055', 0),
+    -> (35, 13, '7132300055', 1),
+    -> (36, 6, '7134567123', 0),
+    -> (37, 21, '7156567123', 1),
+    -> (38, 22, '7156567134', 1),
+    -> (39, 23, '7156563423', 0),
+    -> (40, 24, '7156567183', 0),
+    -> (41, 25, '7146566412', 1);
+Query OK, 41 rows affected (0.07 sec)
+Records: 41  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Student_Address (ID, studentID, address) VALUES
+    -> (1, 1, '13758 Dogwood, St, Trona, CA, Los Angeles, 93562'),
+    -> (2, 2, '2263 Ga 17 Hwy N, Millen, GA, Atlanta, 30442'),
+    -> (3, 3, '409 Berry St, Louisa, KY, San Jose, 41230'),
+    -> (4, 4, '7720 Covington Rd, Pink Stand, TN, San Francisco, 37188'),
+    -> (5, 5, '15 Hempstead, St, Saugus, MA, Las Vega, 1906'),
+    -> (6, 6, '165 Village Dr., P.O. Box 3700, Oakland, TN, Oakland, 38060'),
+    -> (7, 7, 'Po Box 83, Faith, NC, New Jersey, 28041'),
+    -> (8, 8, '3402 Buccaneer Rose Ave, Bakersfield, CA, Boston, 93313'),
+    -> (9, 9, 'Po Box 77, Linking Road, UK'),
+    -> (10, 10, '7710 Covington Rd, New State Road, New York, 37188'),
+    -> (11, 11, '15 Hempstead St, Saugus, MA, Boston, 1906'),
+    -> (12, 12, '165 Ken city, P.O. Box 942873, 50 Higuera Street, Oakland, 38060'),
+    -> (13, 13, 'Po Box 83, Faith, NC, null, New York, 28041'),
+    -> (14, 14, '808 Rocky Hill Rd, Plymouth 1993 Cross lane, Boston, 32360'),
+    -> (15, 15, '118 Lippitt Ave Warwick, 100 S. Main Street, Los Angeles, 12889'),
+    -> (16, 16, '5973 Moon Shadow Dr. Herriman, null, Atlanta, 2345'),
+    -> (17, 17, '13758 Dogwood St, Trona, null, San Jose, 93562'),
+    -> (18, 18, '2263 Ga 17 Hwy N, Millen, null, Las Vega, 30442'),
+    -> (19, 19, '321/vimal park, karve road, pune, 411038'),
+    -> (20, 20, 'Prashant Society, Kothrud, pune, 411038'),
+    -> (21, 21, '8 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (22, 22, '9 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (23, 23, '10 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (24, 24, '4 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (25, 25, '7 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (26, 26, '19 Hempstead St, go streat, MG, Boston, 19077'),
+    -> (27, 27, '1699 Ken city, P.O. Box 942873, 50 Higuera Street, Oakland, 38060'),
+    -> (28, 28, 'Po Box 87, Faith, NC, New York, 28045');
+ERROR 1406 (22001): Data too long for column 'address' at row 4
+mysql> desc Student_address;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| studentID | int         | NO   | UNI | NULL    |       |
+| address   | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table Student_address modify address varchar(255);
+Query OK, 0 rows affected (0.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Student_Address (ID, studentID, address) VALUES
+    -> (1, 1, '13758 Dogwood, St, Trona, CA, Los Angeles, 93562'),
+    -> (2, 2, '2263 Ga 17 Hwy N, Millen, GA, Atlanta, 30442'),
+    -> (3, 3, '409 Berry St, Louisa, KY, San Jose, 41230'),
+    -> (4, 4, '7720 Covington Rd, Pink Stand, TN, San Francisco, 37188'),
+    -> (5, 5, '15 Hempstead, St, Saugus, MA, Las Vega, 1906'),
+    -> (6, 6, '165 Village Dr., P.O. Box 3700, Oakland, TN, Oakland, 38060'),
+    -> (7, 7, 'Po Box 83, Faith, NC, New Jersey, 28041'),
+    -> (8, 8, '3402 Buccaneer Rose Ave, Bakersfield, CA, Boston, 93313'),
+    -> (9, 9, 'Po Box 77, Linking Road, UK'),
+    -> (10, 10, '7710 Covington Rd, New State Road, New York, 37188'),
+    -> (11, 11, '15 Hempstead St, Saugus, MA, Boston, 1906'),
+    -> (12, 12, '165 Ken city, P.O. Box 942873, 50 Higuera Street, Oakland, 38060'),
+    -> (13, 13, 'Po Box 83, Faith, NC, null, New York, 28041'),
+    -> (14, 14, '808 Rocky Hill Rd, Plymouth 1993 Cross lane, Boston, 32360'),
+    -> (15, 15, '118 Lippitt Ave Warwick, 100 S. Main Street, Los Angeles, 12889'),
+    -> (16, 16, '5973 Moon Shadow Dr. Herriman, null, Atlanta, 2345'),
+    -> (17, 17, '13758 Dogwood St, Trona, null, San Jose, 93562'),
+    -> (18, 18, '2263 Ga 17 Hwy N, Millen, null, Las Vega, 30442'),
+    -> (19, 19, '321/vimal park, karve road, pune, 411038'),
+    -> (20, 20, 'Prashant Society, Kothrud, pune, 411038'),
+    -> (21, 21, '8 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (22, 22, '9 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (23, 23, '10 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (24, 24, '4 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (25, 25, '7 vaibhav, Ishadan soc, paud roea, Pune'),
+    -> (26, 26, '19 Hempstead St, go streat, MG, Boston, 19077'),
+    -> (27, 27, '1699 Ken city, P.O. Box 942873, 50 Higuera Street, Oakland, 38060'),
+    -> (28, 28, 'Po Box 87, Faith, NC, New York, 28045');
+Query OK, 28 rows affected (0.08 sec)
+Records: 28  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++---------------------+
+| Tables_in_dac22     |
++---------------------+
+| a                   |
+| agent               |
+| andor               |
+| b                   |
+| blanktablea         |
+| blanktableb         |
+| blog                |
+| bonus               |
+| books               |
+| candidate           |
+| client              |
+| coalesce            |
+| comments            |
+| company             |
+| course              |
+| course_modules      |
+| customer            |
+| customers           |
+| demodept1           |
+| demodept2           |
+| dept                |
+| dept1               |
+| docs                |
+| doctor              |
+| doctorvisits        |
+| dummy               |
+| duplicate           |
+| emp                 |
+| emp1                |
+| emp2                |
+| emp_attendance      |
+| emp_cards           |
+| emp_phone           |
+| empj                |
+| envelope            |
+| faculty             |
+| faculty_address     |
+| faculty_phone       |
+| food                |
+| fullname            |
+| hobby               |
+| item                |
+| job_list            |
+| key_parts           |
+| labtestlist         |
+| leadtable           |
+| licence             |
+| location            |
+| mass_table          |
+| medicinelist        |
+| menucard            |
+| modules             |
+| nearest             |
+| new                 |
+| newbooks            |
+| nullif              |
+| numbers             |
+| numberstring        |
+| ord                 |
+| orderdetails        |
+| orders              |
+| overtime            |
+| patient             |
+| phonecall           |
+| pivot_table         |
+| plumber             |
+| plumber_service_map |
+| points              |
+| price               |
+| product             |
+| product_sales       |
+| products            |
+| quarterly_revenue   |
+| r                   |
+| r1                  |
+| r2                  |
+| races               |
+| regexpr             |
+| replacedept         |
+| revenue             |
+| rockets             |
+| runners             |
+| runningserver       |
+| sales               |
+| sales_channel       |
+| salespeople         |
+| salesperson         |
+| salgrade            |
+| server              |
+| service             |
+| seta                |
+| setb                |
+| shop                |
+| softdrink           |
+| sort                |
+| sourcenames         |
+| stadium             |
+| states              |
+| station             |
+| status              |
+| stringnumber        |
+| student             |
+| student_address     |
+| student_phone       |
+| t11_10              |
+| tablea              |
+| tableaa             |
+| tableb              |
+| tablebb             |
+| targetnames         |
+| tasks               |
+| temp1               |
+| traintimetable      |
+| transactions        |
+| vote_response       |
+| votes               |
+| warehouse           |
+| yearly_revenue      |
+| z                   |
++---------------------+
+119 rows in set (0.01 sec)
+
+mysql> desc faculty;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| namefirst | varchar(20) | YES  |     | NULL    |       |
+| namelast  | varchar(20) | YES  |     | NULL    |       |
+| DOB       | date        | YES  |     | NULL    |       |
+| emailID   | varchar(40) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> desc faculty_address;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   | PRI | NULL    |       |
+| facultyID | int         | NO   | UNI | NULL    |       |
+| address   | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc faculty_phone;
++-----------+------+------+-----+---------+-------+
+| Field     | Type | Null | Key | Default | Extra |
++-----------+------+------+-----+---------+-------+
+| id        | int  | NO   | PRI | NULL    |       |
+| facultyID | int  | YES  | MUL | NULL    |       |
+| number    | int  | YES  |     | NULL    |       |
++-----------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc modules;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(30) | YES  |     | NULL    |       |
+| duration | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc course_modules;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| id       | int  | NO   | PRI | NULL    |       |
+| courseID | int  | YES  |     | NULL    |       |
+| moduleID | int  | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc course;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id       | int          | NO   | PRI | NULL    |       |
+| name     | varchar(30)  | YES  |     | NULL    |       |
+| duration | int          | YES  |     | NULL    |       |
+| summery  | varchar(100) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc course;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id       | int          | NO   | PRI | NULL    |       |
+| name     | varchar(30)  | YES  |     | NULL    |       |
+| duration | int          | YES  |     | NULL    |       |
+| summery  | varchar(100) | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table course add
+    -> alter table course add ^C
+mysql> alter table course_modules add foregin key (courseID) references course(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (courseID) references course(id)' at line 1
+mysql> alter table course_modules add foreign key (courseID) references course(id);
+Query OK, 0 rows affected (0.36 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc course_modules;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| id       | int  | NO   | PRI | NULL    |       |
+| courseID | int  | YES  | MUL | NULL    |       |
+| moduleID | int  | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table course_modules add foreign key (moduleID) references modules(id);
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc course_modules;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| id       | int  | NO   | PRI | NULL    |       |
+| courseID | int  | YES  | MUL | NULL    |       |
+| moduleID | int  | YES  | MUL | NULL    |       |
++----------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table studenet_Qulification(id int primery key,studentID int foreign key(studentID) references studenet(id),name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primery key,studentID int foreign key(studentID) references studenet(id),name va' at line 1
+mysql> create table studenet_Qulification(id int primery key,studentID int foreign key,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primery key,studentID int foreign key,name varchar(255),college varchar(255),uni' at line 1
+mysql> create table studenet_Qulification(id int primery key,studentID int,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int,foreign key (studentID) references student(id));
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.10.150:3306' (10060)
+ERROR:
+Can't connect to the server
+
+mysql> create table studenet_Qulification(id int primery key,studentID int,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int,foreign key (studentID) references student(id));
+No connection. Trying to reconnect...
+ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.10.150:3306' (10060)
+ERROR:
+Can't connect to the server
+
+mysql> create table studenet_Qulification(id int primery key,studentID int,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int,foreign key (studentID) references student(id));
+No connection. Trying to reconnect...
+ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.10.150:3306' (10060)
+ERROR:
+Can't connect to the server
+
+Microsoft Windows [Version 10.0.19045.4894]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\IET>/r
+'/r' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\IET>mysql --host=192.168.10.150 --port=3306 --user=dac22 --password=welcome
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 8.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table studenet_Qulification(id int primery key,studentID int,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int,foreign key (studentID) references student(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primery key,studentID int,name varchar(255),college varchar(255),university varc' at line 1
+mysql> create table studenet_Qulification(id int primary key,studentID int,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int,foreign key (studentID) references student(id));
+ERROR 1046 (3D000): No database selected
+mysql> use dac22;
+Database changed
+mysql> create table studenet_Qulification(id int primary key,studentID int,name varchar(255),college varchar(255),university varchar(255),marks varchar(155),year int,foreign key (studentID) references student(id));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> desc student_qulification;
+ERROR 1146 (42S02): Table 'dac22.student_qulification' doesn't exist
+mysql> desc studenet_qulification;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| id         | int          | NO   | PRI | NULL    |       |
+| studentID  | int          | YES  | MUL | NULL    |       |
+| name       | varchar(255) | YES  |     | NULL    |       |
+| college    | varchar(255) | YES  |     | NULL    |       |
+| university | varchar(255) | YES  |     | NULL    |       |
+| marks      | varchar(155) | YES  |     | NULL    |       |
+| year       | int          | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> CREATE TABLE FACULTY_QUALIFICATIONS (
+    ->     ID INT PRIMARY KEY,
+    ->     facultyID INT,
+    ->     name VARCHAR(128),
+    ->     college VARCHAR(128),
+    ->     university VARCHAR(128),
+    ->     marks VARCHAR(45),
+    ->     year INT,
+    ->     FOREIGN KEY (facultyID) REFERENCES faculty(id)
+    -> );
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> desc faculty_qualifications;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| ID         | int          | NO   | PRI | NULL    |       |
+| facultyID  | int          | YES  | MUL | NULL    |       |
+| name       | varchar(128) | YES  |     | NULL    |       |
+| college    | varchar(128) | YES  |     | NULL    |       |
+| university | varchar(128) | YES  |     | NULL    |       |
+| marks      | varchar(45)  | YES  |     | NULL    |       |
+| year       | int          | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+// mysql>ALTER TABLE old_table_name RENAME TO new_table_name;  -----for change the table name.
+mysql> alter table studenet_qulification rename student_qulification;
+Query OK, 0 rows affected (0.38 sec)
